@@ -82,3 +82,19 @@ stages:
               publishLocation: 'Container'
       
 
+  - stage: Deploy Dev
+    dependsOn: Build
+    condition: succeeded('Build')
+
+    jobs:
+      - job: devDeployment
+        displayName: Deployment to Dev
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              appType: 'webApp'
+              WebAppName: 
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
