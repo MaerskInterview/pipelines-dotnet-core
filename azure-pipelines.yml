@@ -31,3 +31,54 @@ stages:
             inputs:
               command: 'publish'
               publishWebProjects: true
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+      
+      - job: test
+        displayName: Build for test
+        pool:
+          vmImage: $(vmImageName)
+        
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'build'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'test'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'publish'
+              publishWebProjects: true
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+      
+      - job: API
+        displayName: Build for API
+        pool:
+          vmImage: $(vmImageName)
+        
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'build'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'test'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'publish'
+              publishWebProjects: true
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+      
+
