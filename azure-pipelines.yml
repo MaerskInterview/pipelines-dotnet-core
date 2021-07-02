@@ -1,0 +1,33 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+# Build triggers as soon code committed to master
+trigger:
+- master
+
+variables:
+  vmImageName: 'windows-2019'
+
+stages:
+  - stage: Build
+    displayName: Build Stage
+
+    jobs:
+      - job: Web
+        displayName: Build for Web
+        pool:
+          vmImage: $(vmImageName)
+        
+        steps:
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'build'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'test'
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'publish'
+              publishWebProjects: true
