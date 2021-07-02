@@ -102,6 +102,7 @@ stages:
 
   - stage: QA
     dependsOn: DEV
+    displayName: Deployment to QA
     condition: succeeded('DEV')
     jobs:
       - job: waitForValidationQA
@@ -127,6 +128,7 @@ stages:
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
   - stage: PROD
+    displayName: Deployment to PROD
     dependsOn: QA
     condition: succeeded('QA')
     jobs:
